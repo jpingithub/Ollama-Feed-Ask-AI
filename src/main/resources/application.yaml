@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: feed-ask-ai
+
+  datasource:
+    url: jdbc:mysql://localhost:3307/feed_ask_ai?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    username: admin
+    password: admin123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+
+  ai:
+    ollama:
+      base-url: http://localhost:11435
+      init:
+        pull-model-strategy: WHEN_MISSING
+        chat:
+          additional-models:
+            - tinyllama
+        embedding:
+          additional-models:
+            - nomic-embed-text
+
+      chat:
+        model: tinyllama
+
+      embedding:
+        model: nomic-embed-text
+
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+
+logging:
+  level:
+    root: INFO
+    com.rb.feed_ask_ai: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+top:
+  match:
+    max-results: 3
+
